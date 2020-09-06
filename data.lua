@@ -95,26 +95,34 @@ function make_infinite_pipe(name, tint, order)
     data:extend({ infinite_pipe, item, recipe })
 end
 
-
-
 data:extend({
-  {
-    type = "recipe",
-    name = "electric-energy-interface",
-    enabled = false,
-    energy_required=30,
-    ingredients = {
-        {"uranium-fuel-cell",100},
-        {"nuclear-reactor",5},
-        {"heat-exchanger",50},
-        {"steam-turbine",100},
-        {"accumulator",50},
-        {"effectivity-module-3",60},
+    {
+        type = "recipe",
+        name = "electric-energy-interface",
+        enabled = false,
+        energy_required=30,
+        ingredients = {
+            {"uranium-fuel-cell",100},
+            {"nuclear-reactor",5},
+            {"heat-exchanger",50},
+            {"steam-turbine",100},
+            {"accumulator",50},
+            {"effectivity-module-3",60},
+        },
+        result = "electric-energy-interface"
     },
-    result = "electric-energy-interface"
-  },
+    {
+        type = "recipe",
+        name = "express-loader",
+        enabled = false,
+        energy_required=4,
+        ingredients = {
+            {"express-transport-belt",3},
+            {"stack-filter-inserter",3},
+        },
+        result = "express-loader"
+    }
 })
-
 
 data.raw["infinity-container"]["infinity-chest"].gui_mode = "none"
 data.raw["infinity-pipe"]["infinity-pipe"].gui_mode = "none"
@@ -136,6 +144,31 @@ for i, item in pairs(resources.pipe) do
     make_infinite_pipe(item.name, item.tint, "b"..tostring(i))
 end
 
+local loader_research = {
+    type = "technology",
+    name = "express-loader",
+    icon = data.raw["loader"]["express-loader"].icon,
+    icon_size = data.raw["loader"]["express-loader"].icon_size,
+    unit = {
+        count=1000,
+        ingredients = {
+            {"automation-science-pack", 1},
+            {"logistic-science-pack", 1},
+            {"chemical-science-pack", 1},
+            {"production-science-pack", 1},
+            {"utility-science-pack", 1},
+            {"space-science-pack", 1}
+        },
+        time = 30
+    },
+    prerequisites={"logistics-3","inserter-capacity-bonus-7","space-science-pack"},
+    effects={
+        {
+          type  = "unlock-recipe",
+          recipe = "express-loader"
+        }
+    }
+}
 
 local eee_research = {
     type = "technology",
@@ -152,7 +185,7 @@ local eee_research = {
             {"utility-science-pack", 1},
             {"space-science-pack", 1}
         },
-        time = 30
+        time = 45
     },
     prerequisites={"nuclear-power","effectivity-module-3","space-science-pack","electric-energy-accumulators"},
     effects={
@@ -219,4 +252,4 @@ for _,item in pairs(resources.chest) do
     })
 end
 
-data:extend({eee_research,inf_pipe_research, inf_chest_research})
+data:extend({loader_research, eee_research,inf_pipe_research, inf_chest_research})
