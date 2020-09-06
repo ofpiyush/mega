@@ -16,7 +16,12 @@ function make_infinite_chest(name, tint, order)
     infinite_chest.order = order
     infinite_chest.gui_mode = "none"
     infinite_chest.erase_contents_when_mined = true
-    infinite_chest.logistic_mode = "passive-provider"  
+    infinite_chest.logistic_mode = "passive-provider"
+    infinite_chest.picture.layers[1].tint = tint
+    infinite_chest.picture.layers[1].hr_version.tint = tint
+    infinite_chest.minable.result=item_name
+    infinite_chest.minable.mining_particle="coal-particle"
+    infinite_chest.minable.mining_time=8
   
     local item = {
         type = "item",
@@ -43,31 +48,37 @@ function make_infinite_chest(name, tint, order)
         },
         result = item_name
     }
-  
     data:extend({ infinite_chest, item, recipe })
 end
 
 function make_infinite_pipe(name, tint, order)
-    local infinite_pipe = table.deepcopy(data.raw["infinity-pipe"]["infinity-pipe"])
-    local item_data = data.raw.fluid[name]
+    local infinite_pipe = table.deepcopy(data.raw["offshore-pump"]["offshore-pump"])
     local icons = {{
-        icon=item_data.icon,
-        icon_size=item_data.icon_size,
+        icon=infinite_pipe.icon,
+        icon_size=infinite_pipe.icon_size,
         tint=tint
     },}
 
     local item_name = name .. "-infinity-pipe"
-    
+
+    infinite_pipe.adjacent_tile_collision_test = { "ground-tile", "water-tile", "object-layer" }
+    infinite_pipe.adjacent_tile_collision_mask = nil
+    infinite_pipe.placeable_position_visualization = nil
+    infinite_pipe.flags = {"placeable-neutral", "player-creation"}
+    infinite_pipe.adjacent_tile_collision_box = { { -0.5, -0.25}, {0.5, 0.25} }
+    infinite_pipe.pumping_speed=400
+    infinite_pipe.fluid = name
     infinite_pipe.name = item_name
     infinite_pipe.icons = icons
     infinite_pipe.order = order
     infinite_pipe.gui_mode = "none"
-  
+
+    infinite_pipe.minable = {mining_time=5, result=item_name, mining_particle="coal-particle"}
+
     local item = {
         type = "item",
         name = item_name,
-        icon = item_data.icon,
-        icon_size = item_data.icon_size,
+        icons = icons,
         subgroup = "other",
         order = order,
         place_result = item_name,

@@ -1,14 +1,14 @@
 local resources = {
     chest= {
-        {name="coal", tint={r=30,g=30,b=30,a=1}},
-        {name="stone", tint={r=174,g=145,b=85, a=1}},
-        {name="iron-ore", tint={r=123,g=167,b=189,a=1}},
-        {name="copper-ore",tint={r=230,g=141,b=110,a=1}},
-        {name="uranium-ore",tint={r=114,g=192,b=29, a=1}}
+        {name="coal", tint={r=100,g=100,b=100,a=255}},
+        {name="stone", tint={r=200,g=200,b=100, a=255}},
+        {name="iron-ore", tint={r=180,g=190,b=255,a=255}},
+        {name="copper-ore",tint={r=255,g=160,b=130,a=255}},
+        {name="uranium-ore",tint={r=130,g=230,b=50, a=255}}
     },
     pipe = {
-        {name="water",tint={r=100,g=100,b=255,a=1}},
-        {name="crude-oil", tint={r=10,g=10,b=10,a=1}}
+        {name="water",tint={r=100,g=100,b=255,a=255}},
+        {name="crude-oil", tint={r=100,g=100,b=100,a=255}}
     }
 }
 

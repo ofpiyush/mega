@@ -1,16 +1,16 @@
 local resources = require("resources")
 
-function infinity_chests(data)
+function infinity_item_built(data)
     return function (event)
         local entity = event.created_entity or event.entity
         
         if (entity and entity.valid) and not (data[entity.name] == nil) then
             if entity.type == "infinity-container" then
-                entity.set_infinity_container_filter(1,{name=data[entity.name], count=10000,index=1})
+                entity.set_infinity_container_filter(1,{name=data[entity.name], count=1000,index=1})
                 entity.remove_unfiltered_items = true
             end
             if entity.type == "infinity-pipe" then
-                entity.set_infinity_pipe_filter({name=data[entity.name], percentage=2})
+                entity.set_infinity_pipe_filter({name=data[entity.name], percentage=1})
             end
         end
     end 
@@ -32,9 +32,9 @@ do
             data[pipe_type] = item.name
         end
 
-        local fn = infinity_chests(data)
-        script.on_event(defines.events.on_built_entity, fn, filters)
-        script.on_event(defines.events.on_robot_built_entity, fn, filters)
+        local built_fn = infinity_item_built(data)
+        script.on_event(defines.events.on_built_entity, built_fn, filters)
+        script.on_event(defines.events.on_robot_built_entity, built_fn, filters)
     end
 
     script.on_load(function()
